@@ -39,7 +39,7 @@ from rospy import logwarn
 from rostopic import get_topic_type
 from rosbridge_library.internal import ros_loader, message_conversion
 from rosbridge_library.internal.topics import TopicNotEstablishedException, TypeConflictException
-
+import rosgraph
 
 class PublisherConsistencyListener(SubscribeListener):
     """ This class is used to solve the problem that sometimes we create a
@@ -320,7 +320,8 @@ class PublisherManager():
 
     def _unregister_impl(self, topic):
         if not self._publishers[topic].has_clients():
-            self._publishers[topic].unregister()
+            master = rosgraph.Master(rospy.get_name())
+            master.unregisterPublisher(topic, rospy.get_node_uri())
             del self._publishers[topic]
         del self.unregister_timers[topic]
 
