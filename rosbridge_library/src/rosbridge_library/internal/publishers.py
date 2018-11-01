@@ -40,6 +40,7 @@ from rostopic import get_topic_type
 from rosbridge_library.internal import ros_loader, message_conversion
 from rosbridge_library.internal.topics import TopicNotEstablishedException, TypeConflictException
 import rosgraph
+import rospy
 
 class PublisherConsistencyListener(SubscribeListener):
     """ This class is used to solve the problem that sometimes we create a
